@@ -56,9 +56,10 @@ fun runMenu() { /*
             3 -> updateUser()
             4 -> deleteUser()
             5 -> addWorkout()
-            5 -> save()
-            6 -> load()
-            7 -> exitApp()
+            6 -> listWorkout()
+            10 -> save()
+            11 -> load()
+            0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
@@ -157,22 +158,20 @@ fun addWorkout(){
 
 
 fun listWorkout(){
-    if (UserAPI.numberOfUsers() > 0){
+    if (WorkoutAPI.numberOfWorkouts() > 0){
         val option = readNextInt(
             """
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-                  █>>> LIST USERS MENU:          █
+                  █>>> LIST WORKOUT MENU:        █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-                  █   1) List ALL notes          █
-                  █   2) List ACTIVE notes       █
-                  █   3) List ARCHIVED notes     █
+                  █   1) List ALL Workouts       █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
          > ==>> """.trimMargin(">"))
         when (option) { // submenu for the user to choose the type of notes listed
-            1 -> listAllUsers()
+            1 -> listAllWorkouts()
             else -> println("Invalid option entered: $option")
         }
-    } else { println("Option Invalid - No users stored") }
+    } else { println("Option Invalid - No workouts stored") }
 }
 
 fun listAllWorkouts(){ println(UserAPI.listAllUsers()) }
