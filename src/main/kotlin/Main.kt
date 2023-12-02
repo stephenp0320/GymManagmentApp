@@ -57,6 +57,8 @@ fun runMenu() { /*
             4 -> deleteUser()
             5 -> addWorkout()
             6 -> listWorkout()
+            7 -> updateWorkout()
+            8 -> deleteWorkout()
             10 -> save()
             11 -> load()
             0 -> exitApp()
@@ -174,36 +176,37 @@ fun listWorkout(){
     } else { println("Option Invalid - No workouts stored") }
 }
 
-fun listAllWorkouts(){ println(UserAPI.listAllUsers()) }
+fun listAllWorkouts(){ println(WorkoutAPI.listAllWorkouts()) }
 
 
 fun updateWorkout() {
     listUsers()
-    if (UserAPI.numberOfUsers() > 0) {
-        val indexToUpdate = readNextInt("Enter the index of what user to update: ")
-        if (UserAPI.isValidIndex(indexToUpdate)) {
-            val userID = readNextInt("Enter user ID: ")
-            val userName = readNextLine("Enter your name: ")
-            val userEmail = readNextLine("Enter your email address: ")
-            val userPass = readNextLine("enter your password: ")
-            if (UserAPI.updateUser(indexToUpdate, User(userID, userName, userEmail, userPass))) {
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
+        val indexToUpdate = readNextInt("Enter the index of what workout to update: ")
+        if (WorkoutAPI.isValidIndex(indexToUpdate)) {
+            val workoutID = readNextInt("Enter Workout ID: ")
+            val workoutName = readNextLine("Enter workout name: ")
+            val sessionType = readNextLine("Enter the type of session: ")
+            val date = readNextInt("enter the date: ")
+            val sessionDuration = readNextInt("Enter session duration: ")
+            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))) {
                 println("update successful")
             } else {
                 println("update failed")
             }
         } else {
-            println("No users at this index!")
+            println("No workouts at this index!")
         }
     }
 }
 
 fun deleteWorkout(){
-    listUsers()
-    if (UserAPI.numberOfUsers() > 0){
-        val indexToDelete = readValidListIndex("Enter the index of the user you want to delete: ", UserAPI.numberOfUsers())
-        val userToDelete = UserAPI.deleteUser(indexToDelete)
-        if(userToDelete != null){
-            println("Delete successful! Deleted User: ${userToDelete.userName}")
+    listWorkout()
+    if (WorkoutAPI.numberOfWorkouts() > 0){
+        val indexToDelete = readValidListIndex("Enter the index of the workout you want to delete: ", UserAPI.numberOfUsers())
+        val workoutToDelete = WorkoutAPI.deleteWorkout(indexToDelete)
+        if(workoutToDelete != null){
+            println("Delete successful! Deleted Workout: ${workoutToDelete.workoutName}")
         } else{
             println("Delete not successful")
         }
@@ -231,4 +234,4 @@ fun deleteWorkout(){
         logger.info { "exitApp() function invoked" }
         exitProcess(0)
     } // exits app when finished
-}
+
