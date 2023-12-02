@@ -1,6 +1,7 @@
 import controllers.UserAPI
-import controllers.workoutAPI
+import controllers.WorkoutAPI
 import models.User
+import models.Workout
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
@@ -13,6 +14,8 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
+
 
 fun main() {
     runMenu()
@@ -51,12 +54,21 @@ fun runMenu() { /*
             1  -> addUser()
             2  -> listUsers()
             3 -> updateUser()
+            4 -> deleteUser()
+            5 -> addWorkout()
+            6 -> listWorkout()
+            7 -> updateWorkout()
+            8 -> deleteWorkout()
+            10 -> save()
+            11 -> load()
+            0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
 }
 
 
+/* user functionality*/
 
 
 fun addUser(){
@@ -113,6 +125,7 @@ fun updateUser() {
             println("No users at this index!")
         }
     }
+}
 
     fun deleteUser(){
         listUsers()
@@ -127,6 +140,78 @@ fun updateUser() {
         }
     }
 
+
+/* workout functionality*/
+
+
+fun addWorkout(){
+    val workoutID = readNextInt("Enter Workout ID: ")
+    val workoutName = readNextLine("Enter workout name: ")
+    val sessionType = readNextLine("Enter the type of session: ")
+    val date = readNextInt("enter the date: ")
+    val sessionDuration = readNextInt("Enter session duration: ")
+    val isAdded = WorkoutAPI.addWorkout(Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))
+    if (isAdded){
+        println("Workout has been successfully added")
+    } else {
+        println("Workout addition  failed")
+    }
+}
+
+
+fun listWorkout(){
+    if (WorkoutAPI.numberOfWorkouts() > 0){
+        val option = readNextInt(
+            """
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █>>> LIST WORKOUT MENU:        █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █   1) List ALL Workouts       █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         > ==>> """.trimMargin(">"))
+        when (option) { // submenu for the user to choose the type of notes listed
+            1 -> listAllWorkouts()
+            else -> println("Invalid option entered: $option")
+        }
+    } else { println("Option Invalid - No workouts stored") }
+}
+
+fun listAllWorkouts(){ println(WorkoutAPI.listAllWorkouts()) }
+
+
+fun updateWorkout() {
+    listUsers()
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
+        val indexToUpdate = readNextInt("Enter the index of what workout to update: ")
+        if (WorkoutAPI.isValidIndex(indexToUpdate)) {
+            val workoutID = readNextInt("Enter Workout ID: ")
+            val workoutName = readNextLine("Enter workout name: ")
+            val sessionType = readNextLine("Enter the type of session: ")
+            val date = readNextInt("enter the date: ")
+            val sessionDuration = readNextInt("Enter session duration: ")
+            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))) {
+                println("update successful")
+            } else {
+                println("update failed")
+            }
+        } else {
+            println("No workouts at this index!")
+        }
+    }
+}
+
+fun deleteWorkout(){
+    listWorkout()
+    if (WorkoutAPI.numberOfWorkouts() > 0){
+        val indexToDelete = readValidListIndex("Enter the index of the workout you want to delete: ", UserAPI.numberOfUsers())
+        val workoutToDelete = WorkoutAPI.deleteWorkout(indexToDelete)
+        if(workoutToDelete != null){
+            println("Delete successful! Deleted Workout: ${workoutToDelete.workoutName}")
+        } else{
+            println("Delete not successful")
+        }
+    }
+}
 
     fun save() {
         try {
@@ -149,4 +234,4 @@ fun updateUser() {
         logger.info { "exitApp() function invoked" }
         exitProcess(0)
     } // exits app when finished
-}
+
