@@ -23,23 +23,25 @@ fun main() {
 }//code when run loads menu
 fun mainMenu() : Int { //users notes app user interface menu
     return readNextInt(""" 
-           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                                █
-         █                                  █
-         █     WORKOUT APP                  █
-         █                                  █
-         █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
-         █ ---> MENU:                       █  
-         █                                  █
-         █  11) Save a note                 █
-         █  12) Load a note                 █
-         █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
-         █  0) Exit {-_-}                   █
-         █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█
-         █▄▄▄▄▄▄▄▄▄▄▄▄██████████▄▄▄▄▄▄▄▄▄▄▄▄█
-          ▀▄▄▄▄▄▄▄▄▄▄▄██████████▄▄▄▄▄▄▄▄▄▄▄▀
-         
-         
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          █                  STEVE'S GYM MANAGEMENT APP                █
+          █                                                            █
+          ██████████████████████████████████████████████████████████████                                                       █
+          █  CRUD OPTIONS:                                             █
+          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP  █
+          █    2) LIST USER         6) LIST WORKOUT       10) LOAD     █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     11) SAVE     █
+          █    4) DELETE USER       8) DELETE WORKOUT                  █
+          ██████████████████████████████████████████████████████████████                                              █
+          █  ADDITIONAL FUNCTIONS:                                     █
+          █                                                            █
+          █                                                            █
+          █                                                            █
+          █                                                            █
+          █                                                            █
+          █                                                            █
+          ██████████████████████████████████████████████████████████████
+          
          Type here ==>> """.trimMargin(">"))
     //https://www.asciiart.eu/ascii-one-line
 
@@ -92,9 +94,7 @@ fun listUsers(){
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                   █>>> LIST USERS MENU:          █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-                  █   1) List ALL notes          █
-                  █   2) List ACTIVE notes       █
-                  █   3) List ARCHIVED notes     █
+                  █   1) List ALL Users          █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
          > ==>> """.trimMargin(">"))
         when (option) { // submenu for the user to choose the type of notes listed
