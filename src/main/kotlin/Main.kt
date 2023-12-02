@@ -29,8 +29,8 @@ fun mainMenu() : Int { //users notes app user interface menu
           ██████████████████████████████████████████████████████████████                                                       █
           █  CRUD OPTIONS:                                             █
           █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP  █
-          █    2) LIST USER         6) LIST WORKOUT       10) SAVE     █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     11) LOAD     █
+          █    2) LIST USER         6) LIST WORKOUT       11) SAVE     █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD     █
           █    4) DELETE USER       8) DELETE WORKOUT                  █
           ██████████████████████████████████████████████████████████████                                              █
           █  ADDITIONAL FUNCTIONS:                                     █
@@ -62,8 +62,9 @@ fun runMenu() { /*
             7 -> updateWorkout()
             8 -> deleteWorkout()
             9 -> userWorkoutMenu()
-            10 -> save()
-            11 -> load()
+            10 -> workoutCompletion()
+            11 -> save()
+            12 -> load()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -233,12 +234,42 @@ fun userWorkoutMenu(){
     } else { println("Option Invalid - No workouts stored") }
 }
 
+fun workoutCompletion(){
+    println("Welcome to the workout completion logger!")
+    if (WorkoutAPI.numberOfWorkouts() > 0){
+        val option = readNextInt(
+            """
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █>>> WORKOUT COMPLETION LOGGER █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █   1) log workout completion  █
+                  █   2) view archived workouts  █ 
+                  █   3) view active workouts    █ 
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         > ==>> """.trimMargin(">"))
+        when (option) { // submenu for the user to choose the type of notes listed
+            1 -> WorkoutAPI.logWorkoutCompletion()
+            2 -> viewArchivedWorkouts()
+            else -> println("Invalid option entered: $option")
+        }
+    } else { println("Option Invalid - No workouts stored") }
+
+}
 
 
 
 
-
-
+fun viewArchivedWorkouts(){
+    val archivedWorkout = WorkoutAPI.getArchivedWorkouts()
+    if (archivedWorkout.isEmpty()){
+        println("There were no archived workouts stored")
+    } else{
+        println("All archived workouts: ")
+        archivedWorkout.forEach { workout ->
+            println(workout)
+        }
+    }
+}
 
 
 
