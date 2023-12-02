@@ -1,6 +1,5 @@
 package models
 
-import java.time.Duration
 
 class Workout(
     var workoutID: Int,
@@ -10,4 +9,8 @@ class Workout(
     var sessionDuration: Int,
     var sessionCompleted: Boolean
 ) {
+
+    override fun toString(): String{
+        return "Workout ID: ${workoutID}, Workout Name: $workoutName, Date: $date, session type $sessionType, session duration $sessionDuration, session completed $sessionCompleted "
+    }
 }

@@ -1,10 +1,11 @@
 package controllers
 
-
+import utils.ValidateInput.readValidListIndex
 import models.Workout
 import persistence.JSONSerializer
 import persistence.Serializer
 import utils.ValidateInput
+import utils.Utilities
 
 class WorkoutAPI(serializerType: JSONSerializer) {
     private var workouts = ArrayList<Workout>() // notes are stored here
@@ -17,6 +18,17 @@ class WorkoutAPI(serializerType: JSONSerializer) {
 
     fun listAllWorkouts(): String = if(workouts.isEmpty()) "no users stored" else writeList(workouts)
 
+    fun chooseWorkout(){
+        println(listAllWorkouts())
+        val workoutChosen = readValidListIndex("Enter the index of the workout you want to select: ", numberOfWorkouts())
+        if (isValidIndex(workoutChosen)){
+            val selectedWorkout = workouts[workoutChosen]
+            println("you selected workout: ${selectedWorkout.workoutName}")
+            println("Workout Details: $selectedWorkout")
+        } else{
+            println("not a valid index!")
+        }
+    }
 
     fun isValidIndex(index: Int) :Boolean{ return ValidateInput.isValidListIndex(index, workouts) } // validates the entered index
 
