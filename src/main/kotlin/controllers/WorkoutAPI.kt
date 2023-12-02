@@ -1,5 +1,6 @@
 package controllers
 
+import models.User
 import models.Workout
 import persistence.JSONSerializer
 import persistence.Serializer
@@ -80,15 +81,13 @@ class WorkoutAPI(serializerType: JSONSerializer) {
 
 
 
-
-
-
-
     @Throws(Exception::class)
-    fun load() { workouts = Serializer.read() as ArrayList<Workout> }
+    fun load() { workouts = serializer.read() as ArrayList<Workout> }
 
     @Throws(Exception::class)
     fun store() { serializer.write(workouts) }
+
+
 
     private fun formatListString(notesToFormat : List<Workout>) : String = notesToFormat.joinToString (separator = "\n") { user -> workouts.indexOf(user).toString() + ": " + user.toString() }
     private fun writeList(notesToFormat : List<Workout>) : String = notesToFormat.joinToString (separator = "\n") { user -> workouts.indexOf(user).toString() + ": " + user.toString() + "\n"}

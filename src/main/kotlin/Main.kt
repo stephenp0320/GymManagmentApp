@@ -25,24 +25,27 @@ fun main() {
 }//code when run loads menu
 fun mainMenu() : Int { //users notes app user interface menu
     return readNextInt(""" 
-          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                  STEVE'S GYM MANAGEMENT APP                █
-          █                                                            █
-          ██████████████████████████████████████████████████████████████                                                       █
-          █  CRUD OPTIONS:                                             █
-          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP  █
-          █    2) LIST USER         6) LIST WORKOUT       11) SAVE     █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD     █
-          █    4) DELETE USER       8) DELETE WORKOUT                  █
-          ██████████████████████████████████████████████████████████████                                              █
-          █  ADDITIONAL FUNCTIONS:                                     █
-          █    9) Open User Workout Menu                               █
-          █    10) Complete Workout                                    █
-          █                                                            █
-          █                                                            █
-          █                                                            █
-          █                                                            █
-          ██████████████████████████████████████████████████████████████
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          █                  STEVE'S GYM MANAGEMENT APP                         █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████                                                           
+          █  CRUD OPTIONS:                                                      █
+          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP           █
+          █    2) LIST USER         6) LIST WORKOUT       11) SAVE USERS        █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD USERS        █
+          █    4) DELETE USER       8) DELETE WORKOUT     13) SAVE WORKOUT      █ 
+          █                                               14) LOAD WORKOUT      █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████                                              
+          █  ADDITIONAL FUNCTIONS:                                              █
+          █    9) Open User Workout Menu                                        █
+          █    10) Complete Workout                                             █
+          █                                                                     █
+          █                                                                     █
+          █                                                                     █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████
+
           
          Type here ==>> """.trimMargin(">"))
     //https://www.asciiart.eu/ascii-one-line
@@ -65,8 +68,6 @@ fun runMenu() { /*
             8 -> deleteWorkout()
             9 -> userWorkoutMenu()
             10 -> workoutCompletion()
-            11 -> save()
-            12 -> load()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -80,7 +81,7 @@ fun runMenu() { /*
 fun addUser(){
     val userID = readNextInt("Enter user ID: ")
     val userName = readNextLine("Enter your name: ")
-    val userEmail = readValidUserEmailAddress("Enter your email address: ")
+    val userEmail = readNextLine("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
     val isAdded = userEmail?.let { User(userID,userName, it,userPass) }?.let { UserAPI.add(it) }
     if (isAdded == true){
@@ -192,15 +193,11 @@ fun updateWorkout() {
         val indexToUpdate = readNextInt("Enter the index of what workout to update: ")
         if (WorkoutAPI.isValidIndex(indexToUpdate)) {
             val workoutID = readNextInt("Enter Workout ID: ")
-            val workoutName = readValidWorkoutName("Enter workout name: ")
+            val workoutName = readNextLine("Enter workout name: ")
             val sessionType = readNextLine("Enter the type of session: ")
             val date = readNextInt("enter the date: ")
             val sessionDuration = readNextInt("Enter session duration: ")
-            if (WorkoutAPI.updateWorkout(indexToUpdate,
-                    workoutName?.let {
-                        Workout(workoutID,
-                            it,sessionType,date,sessionDuration, sessionCompleted = false)
-                    })) {
+            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))) {
                 println("update successful")
             } else {
                 println("update failed")
@@ -290,24 +287,13 @@ fun viewArchivedWorkouts(){
 
 
 /*running methods*/
-    fun save() {
-        try {
-            UserAPI.store()
-        } catch (e: Exception) {
-            System.err.println("Error writing to file: $e")
-        }
-        println("SAVED!")
-    }
+fun saveUsers() { try { UserAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
 
-    fun load() {
-        try {
-            UserAPI.load()
-        } catch (e: Exception) {
-            System.err.println("Error reading from file: $e")
-        }
-        println("LOADED!")
+fun loadUser() { try { UserAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
 
-    }
+fun saveWorkout() { try { WorkoutAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+
+fun loadWorkout() { try { WorkoutAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
 
 
     fun exitApp() {

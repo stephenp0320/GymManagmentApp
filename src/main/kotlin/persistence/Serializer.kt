@@ -7,9 +7,6 @@ interface Serializer {
     @Throws(Exception::class)
     fun read(): Any?
 
-    companion object {
-        fun read() {
 
-        }
-    }
+
 }

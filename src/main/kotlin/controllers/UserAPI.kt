@@ -42,13 +42,13 @@ fun updateUser(indexToUpdate: Int, user: User?): Boolean{
 
 
 
-
-
     @Throws(Exception::class)
-    fun load() { users = Serializer.read() as ArrayList<User> }
+    fun load() { users = serializer.read() as ArrayList<User> }
 
     @Throws(Exception::class)
     fun store() { serializer.write(users) }
+
+
 
     private fun formatListString(notesToFormat : List<User>) : String = notesToFormat.joinToString (separator = "\n") { user -> users.indexOf(user).toString() + ": " + user.toString() }
     private fun writeList(notesToFormat : List<User>) : String = notesToFormat.joinToString (separator = "\n") { user -> users.indexOf(user).toString() + ": " + user.toString() + "\n"}
