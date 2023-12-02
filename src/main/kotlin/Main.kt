@@ -29,13 +29,13 @@ fun mainMenu() : Int { //users notes app user interface menu
           ██████████████████████████████████████████████████████████████                                                       █
           █  CRUD OPTIONS:                                             █
           █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP  █
-          █    2) LIST USER         6) LIST WORKOUT       10) LOAD     █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     11) SAVE     █
+          █    2) LIST USER         6) LIST WORKOUT       10) SAVE     █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     11) LOAD     █
           █    4) DELETE USER       8) DELETE WORKOUT                  █
           ██████████████████████████████████████████████████████████████                                              █
           █  ADDITIONAL FUNCTIONS:                                     █
-          █                                                            █
-          █                                                            █
+          █    9) Open User Workout Menu                               █
+          █    10) Complete Workout                                    █
           █                                                            █
           █                                                            █
           █                                                            █
@@ -61,6 +61,7 @@ fun runMenu() { /*
             6 -> listWorkout()
             7 -> updateWorkout()
             8 -> deleteWorkout()
+            9 -> userWorkoutMenu()
             10 -> save()
             11 -> load()
             0 -> exitApp()
@@ -213,12 +214,49 @@ fun deleteWorkout(){
     }
 }
 
+/* new functionality*/
+
+fun userWorkoutMenu(){
+    if (WorkoutAPI.numberOfWorkouts() > 0){
+        val option = readNextInt(
+            """
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █>>> YOUR WORKOUT MENU         █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █   1) Choose workout         █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         > ==>> """.trimMargin(">"))
+        when (option) { // submenu for the user to choose the type of notes listed
+            1 -> WorkoutAPI.chooseWorkout()
+            else -> println("Invalid option entered: $option")
+        }
+    } else { println("Option Invalid - No workouts stored") }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*running methods*/
     fun save() {
         try {
             UserAPI.store()
         } catch (e: Exception) {
             System.err.println("Error writing to file: $e")
         }
+        println("SAVED!")
     }
 
     fun load() {
@@ -227,6 +265,8 @@ fun deleteWorkout(){
         } catch (e: Exception) {
             System.err.println("Error reading from file: $e")
         }
+        println("LOADED!")
+
     }
 
 

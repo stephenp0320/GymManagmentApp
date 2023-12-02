@@ -14,7 +14,7 @@ class UserAPI(serializerType: JSONSerializer) {
 
     fun numberOfUsers(): Int { return users.size}
 
-    fun listAllUsers(): String = if(users.isEmpty()) "no users stored" else writeList(users)
+    fun listAllUsers(): String = if(users.isEmpty()) "no users stored" else formatListString(users)
 
 
     fun isValidIndex(index: Int) :Boolean{ return ValidateInput.isValidListIndex(index, users) } // validates the entered index

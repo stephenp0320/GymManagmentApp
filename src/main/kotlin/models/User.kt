@@ -6,4 +6,10 @@ class User(
     var userEmail: String,
     var userPassword: String
 ) {
+
+    override fun toString(): String{
+        return "User ID: $userID, Name: $userName, Email: $userEmail"
+    }
+
 }
+
