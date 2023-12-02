@@ -5,6 +5,7 @@ import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.ValidateInput.readValidListIndex
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -110,6 +111,19 @@ fun updateUser() {
             }
         } else {
             println("No users at this index!")
+        }
+    }
+
+    fun deleteUser(){
+        listUsers()
+        if (UserAPI.numberOfUsers() > 0){
+            val indexToDelete = readValidListIndex("Enter the index of the user you want to delete: ", UserAPI.numberOfUsers())
+            val userToDelete = UserAPI.deleteUser(indexToDelete)
+            if(userToDelete != null){
+                println("Delete successful! Deleted User: ${userToDelete.userName}")
+            } else{
+                println("Delete not successful")
+            }
         }
     }
 

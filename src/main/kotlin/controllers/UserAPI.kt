@@ -34,6 +34,15 @@ fun updateUser(indexToUpdate: Int, user: User?): Boolean{
 
     private fun findUser(index: Int): User? = if (ValidateInput.isValidListIndex(index, users)) { users[index] } else null // finds a note
 
+    fun deleteUser(indexToDelete: Int): User? =
+        if (ValidateInput.isValidListIndex(indexToDelete, users)) { users.removeAt(indexToDelete) } else null // deletes notes stored in the notes arrayList
+
+
+
+
+
+
+
 
     @Throws(Exception::class)
     fun load() { users = Serializer.read() as ArrayList<User> }
