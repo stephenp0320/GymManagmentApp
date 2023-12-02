@@ -1,17 +1,25 @@
 package controllers
 
-import utils.ValidateInput.readValidListIndex
 import models.Workout
 import persistence.JSONSerializer
 import persistence.Serializer
 import utils.ValidateInput
-import utils.Utilities
+import utils.ValidateInput.readValidListIndex
+import utils.WorkoutValidation.isValidWorkoutName
 
 class WorkoutAPI(serializerType: JSONSerializer) {
     private var workouts = ArrayList<Workout>() // notes are stored here
     private var serializer: JSONSerializer = serializerType
 
-    fun addWorkout(workout: Workout): Boolean = workouts.add(workout)
+    fun addWorkout(workout: Workout): Boolean {
+        if (!isValidWorkoutName(workout.workoutName)) {
+            println("Invalid workout name: ${workout.workoutName}")
+            return false
+        }
+        workouts.add(workout)
+        return true
+    }
+
 
 
     fun numberOfWorkouts(): Int { return workouts.size}

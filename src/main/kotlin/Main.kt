@@ -6,7 +6,9 @@ import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.UserValidation.readValidUserEmailAddress
 import utils.ValidateInput.readValidListIndex
+import utils.WorkoutValidation.readValidWorkoutName
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -78,10 +80,10 @@ fun runMenu() { /*
 fun addUser(){
     val userID = readNextInt("Enter user ID: ")
     val userName = readNextLine("Enter your name: ")
-    val userEmail = readNextLine("Enter your email address: ")
+    val userEmail = readValidUserEmailAddress("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
-    val isAdded = UserAPI.add(User(userID,userName,userEmail,userPass))
-    if (isAdded){
+    val isAdded = userEmail?.let { User(userID,userName, it,userPass) }?.let { UserAPI.add(it) }
+    if (isAdded == true){
         println("User has been successfully added")
     } else {
         println("add failed")
@@ -116,9 +118,9 @@ fun updateUser() {
         if (UserAPI.isValidIndex(indexToUpdate)) {
             val userID = readNextInt("Enter user ID: ")
             val userName = readNextLine("Enter your name: ")
-            val userEmail = readNextLine("Enter your email address: ")
+            val userEmail = readValidUserEmailAddress("Enter your email address: ")
             val userPass = readNextLine("enter your password: ")
-            if (UserAPI.updateUser(indexToUpdate, User(userID, userName, userEmail, userPass))) {
+            if (UserAPI.updateUser(indexToUpdate, userEmail?.let { User(userID, userName, it, userPass) })) {
                 println("update successful")
             } else {
                 println("update failed")
@@ -148,12 +150,15 @@ fun updateUser() {
 
 fun addWorkout(){
     val workoutID = readNextInt("Enter Workout ID: ")
-    val workoutName = readNextLine("Enter workout name: ")
+    val workoutName = readValidWorkoutName("Enter workout name: ")
     val sessionType = readNextLine("Enter the type of session: ")
     val date = readNextInt("enter the date: ")
     val sessionDuration = readNextInt("Enter session duration: ")
-    val isAdded = WorkoutAPI.addWorkout(Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))
-    if (isAdded){
+    val isAdded = workoutName?.let {
+        Workout(workoutID,
+            it,sessionType,date,sessionDuration, sessionCompleted = false)
+    }?.let { WorkoutAPI.addWorkout(it) }
+    if (isAdded == true){
         println("Workout has been successfully added")
     } else {
         println("Workout addition  failed")
@@ -187,11 +192,15 @@ fun updateWorkout() {
         val indexToUpdate = readNextInt("Enter the index of what workout to update: ")
         if (WorkoutAPI.isValidIndex(indexToUpdate)) {
             val workoutID = readNextInt("Enter Workout ID: ")
-            val workoutName = readNextLine("Enter workout name: ")
+            val workoutName = readValidWorkoutName("Enter workout name: ")
             val sessionType = readNextLine("Enter the type of session: ")
             val date = readNextInt("enter the date: ")
             val sessionDuration = readNextInt("Enter session duration: ")
-            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))) {
+            if (WorkoutAPI.updateWorkout(indexToUpdate,
+                    workoutName?.let {
+                        Workout(workoutID,
+                            it,sessionType,date,sessionDuration, sessionCompleted = false)
+                    })) {
                 println("update successful")
             } else {
                 println("update failed")
