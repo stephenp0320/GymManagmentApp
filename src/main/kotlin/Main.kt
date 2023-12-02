@@ -68,6 +68,10 @@ fun runMenu() { /*
             8 -> deleteWorkout()
             9 -> userWorkoutMenu()
             10 -> workoutCompletion()
+            11 -> saveUsers()
+            12 -> loadUser()
+            13 -> saveWorkout()
+            14 -> loadWorkout()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
