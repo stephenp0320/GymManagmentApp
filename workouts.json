@@ -1,0 +1,7 @@
+{"object-stream":
+{"list":[
+  {"models.Workout":[
+    {"workoutID":"1","workoutName":"yoga","sessionType":"cardio","date":10,"sessionDuration":20,"sessionCompleted":false},
+    {"workoutID":"2","workoutName":"back & biceps","sessionType":"hypertrophy","date":10,"sessionDuration":20,"sessionCompleted":false},
+    {"workoutID":"3","workoutName":"cycling","sessionType":"cardio","date":10,"sessionDuration":20,"sessionCompleted":false},
+    {"workoutID":"4","workoutName":"legs","sessionType":"hypertrophy","date":10,"sessionDuration":20,"sessionCompleted":false}]}]}}

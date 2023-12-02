@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
-private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workouts.json")))
 
 
 fun main() {
@@ -87,8 +87,8 @@ fun addUser(){
     val userName = readNextLine("Enter your name: ")
     val userEmail = readNextLine("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
-    val isAdded = userEmail?.let { User(userID,userName, it,userPass) }?.let { UserAPI.add(it) }
-    if (isAdded == true){
+    val isAdded = User(userID,userName, userEmail,userPass).let { UserAPI.add(it) }
+    if (isAdded){
         println("User has been successfully added")
     } else {
         println("add failed")
