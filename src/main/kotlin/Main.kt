@@ -6,7 +6,9 @@ import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import utils.UserValidation.readValidUserEmailAddress
 import utils.ValidateInput.readValidListIndex
+import utils.WorkoutValidation.readValidWorkoutName
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -14,7 +16,7 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
-private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workouts.json")))
 
 
 fun main() {
@@ -23,24 +25,27 @@ fun main() {
 }//code when run loads menu
 fun mainMenu() : Int { //users notes app user interface menu
     return readNextInt(""" 
-          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                  STEVE'S GYM MANAGEMENT APP                █
-          █                                                            █
-          ██████████████████████████████████████████████████████████████                                                       █
-          █  CRUD OPTIONS:                                             █
-          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP  █
-          █    2) LIST USER         6) LIST WORKOUT       11) SAVE     █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD     █
-          █    4) DELETE USER       8) DELETE WORKOUT                  █
-          ██████████████████████████████████████████████████████████████                                              █
-          █  ADDITIONAL FUNCTIONS:                                     █
-          █    9) Open User Workout Menu                               █
-          █    10) Complete Workout                                    █
-          █                                                            █
-          █                                                            █
-          █                                                            █
-          █                                                            █
-          ██████████████████████████████████████████████████████████████
+          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+          █                  STEVE'S GYM MANAGEMENT APP                         █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████                                                           
+          █  CRUD OPTIONS:                                                      █
+          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP           █
+          █    2) LIST USER         6) LIST WORKOUT       11) SAVE USERS        █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD USERS        █
+          █    4) DELETE USER       8) DELETE WORKOUT     13) SAVE WORKOUT      █ 
+          █                                               14) LOAD WORKOUT      █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████                                              
+          █  ADDITIONAL FUNCTIONS:                                              █
+          █    9) Open User Workout Menu                                        █
+          █    10) Complete Workout                                             █
+          █                                                                     █
+          █                                                                     █
+          █                                                                     █
+          █                                                                     █
+          ███████████████████████████████████████████████████████████████████████
+
           
          Type here ==>> """.trimMargin(">"))
     //https://www.asciiart.eu/ascii-one-line
@@ -63,8 +68,10 @@ fun runMenu() { /*
             8 -> deleteWorkout()
             9 -> userWorkoutMenu()
             10 -> workoutCompletion()
-            11 -> save()
-            12 -> load()
+            11 -> saveUsers()
+            12 -> loadUser()
+            13 -> saveWorkout()
+            14 -> loadWorkout()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -80,7 +87,7 @@ fun addUser(){
     val userName = readNextLine("Enter your name: ")
     val userEmail = readNextLine("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
-    val isAdded = UserAPI.add(User(userID,userName,userEmail,userPass))
+    val isAdded = User(userID,userName, userEmail,userPass).let { UserAPI.add(it) }
     if (isAdded){
         println("User has been successfully added")
     } else {
@@ -116,9 +123,9 @@ fun updateUser() {
         if (UserAPI.isValidIndex(indexToUpdate)) {
             val userID = readNextInt("Enter user ID: ")
             val userName = readNextLine("Enter your name: ")
-            val userEmail = readNextLine("Enter your email address: ")
+            val userEmail = readValidUserEmailAddress("Enter your email address: ")
             val userPass = readNextLine("enter your password: ")
-            if (UserAPI.updateUser(indexToUpdate, User(userID, userName, userEmail, userPass))) {
+            if (UserAPI.updateUser(indexToUpdate, userEmail?.let { User(userID, userName, it, userPass) })) {
                 println("update successful")
             } else {
                 println("update failed")
@@ -148,12 +155,15 @@ fun updateUser() {
 
 fun addWorkout(){
     val workoutID = readNextInt("Enter Workout ID: ")
-    val workoutName = readNextLine("Enter workout name: ")
+    val workoutName = readValidWorkoutName("Enter workout name: ")
     val sessionType = readNextLine("Enter the type of session: ")
     val date = readNextInt("enter the date: ")
     val sessionDuration = readNextInt("Enter session duration: ")
-    val isAdded = WorkoutAPI.addWorkout(Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))
-    if (isAdded){
+    val isAdded = workoutName?.let {
+        Workout(workoutID,
+            it,sessionType,date,sessionDuration, sessionCompleted = false)
+    }?.let { WorkoutAPI.addWorkout(it) }
+    if (isAdded == true){
         println("Workout has been successfully added")
     } else {
         println("Workout addition  failed")
@@ -281,24 +291,13 @@ fun viewArchivedWorkouts(){
 
 
 /*running methods*/
-    fun save() {
-        try {
-            UserAPI.store()
-        } catch (e: Exception) {
-            System.err.println("Error writing to file: $e")
-        }
-        println("SAVED!")
-    }
+fun saveUsers() { try { UserAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
 
-    fun load() {
-        try {
-            UserAPI.load()
-        } catch (e: Exception) {
-            System.err.println("Error reading from file: $e")
-        }
-        println("LOADED!")
+fun loadUser() { try { UserAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
 
-    }
+fun saveWorkout() { try { WorkoutAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+
+fun loadWorkout() { try { WorkoutAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
 
 
     fun exitApp() {
