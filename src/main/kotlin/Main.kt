@@ -1,6 +1,7 @@
 import controllers.UserAPI
-import controllers.workoutAPI
+import controllers.WorkoutAPI
 import models.User
+import models.Workout
 import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
@@ -13,6 +14,8 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
+
 
 fun main() {
     runMenu()
@@ -51,12 +54,18 @@ fun runMenu() { /*
             1  -> addUser()
             2  -> listUsers()
             3 -> updateUser()
+            4 -> deleteUser()
+            5 -> addWorkout()
+            5 -> save()
+            6 -> load()
+            7 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
 }
 
 
+/* user functionality*/
 
 
 fun addUser(){
@@ -113,6 +122,7 @@ fun updateUser() {
             println("No users at this index!")
         }
     }
+}
 
     fun deleteUser(){
         listUsers()
@@ -127,6 +137,79 @@ fun updateUser() {
         }
     }
 
+
+/* workout functionality*/
+
+
+fun addWorkout(){
+    val workoutID = readNextInt("Enter Workout ID: ")
+    val workoutName = readNextLine("Enter workout name: ")
+    val sessionType = readNextLine("Enter the type of session: ")
+    val date = readNextInt("enter the date: ")
+    val sessionDuration = readNextInt("Enter session duration: ")
+    val isAdded = WorkoutAPI.addWorkout(Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))
+    if (isAdded){
+        println("Workout has been successfully added")
+    } else {
+        println("Workout addition  failed")
+    }
+}
+
+
+fun listWorkout(){
+    if (UserAPI.numberOfUsers() > 0){
+        val option = readNextInt(
+            """
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █>>> LIST USERS MENU:          █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+                  █   1) List ALL notes          █
+                  █   2) List ACTIVE notes       █
+                  █   3) List ARCHIVED notes     █
+                  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         > ==>> """.trimMargin(">"))
+        when (option) { // submenu for the user to choose the type of notes listed
+            1 -> listAllUsers()
+            else -> println("Invalid option entered: $option")
+        }
+    } else { println("Option Invalid - No users stored") }
+}
+
+fun listAllWorkouts(){ println(UserAPI.listAllUsers()) }
+
+
+fun updateWorkout() {
+    listUsers()
+    if (UserAPI.numberOfUsers() > 0) {
+        val indexToUpdate = readNextInt("Enter the index of what user to update: ")
+        if (UserAPI.isValidIndex(indexToUpdate)) {
+            val userID = readNextInt("Enter user ID: ")
+            val userName = readNextLine("Enter your name: ")
+            val userEmail = readNextLine("Enter your email address: ")
+            val userPass = readNextLine("enter your password: ")
+            if (UserAPI.updateUser(indexToUpdate, User(userID, userName, userEmail, userPass))) {
+                println("update successful")
+            } else {
+                println("update failed")
+            }
+        } else {
+            println("No users at this index!")
+        }
+    }
+}
+
+fun deleteWorkout(){
+    listUsers()
+    if (UserAPI.numberOfUsers() > 0){
+        val indexToDelete = readValidListIndex("Enter the index of the user you want to delete: ", UserAPI.numberOfUsers())
+        val userToDelete = UserAPI.deleteUser(indexToDelete)
+        if(userToDelete != null){
+            println("Delete successful! Deleted User: ${userToDelete.userName}")
+        } else{
+            println("Delete not successful")
+        }
+    }
+}
 
     fun save() {
         try {
