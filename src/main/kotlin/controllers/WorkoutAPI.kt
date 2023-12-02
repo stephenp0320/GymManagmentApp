@@ -48,6 +48,22 @@ class WorkoutAPI(serializerType: JSONSerializer) {
         return false
     }
 
+    fun logWorkoutCompletion(){
+        println(listAllWorkouts())
+        val workoutIndex = readValidListIndex("Enter the index of the workout you want to complete: ", numberOfWorkouts())
+        if (isValidIndex(workoutIndex)){
+            val workout = workouts[workoutIndex]
+            workout.sessionCompleted = true
+            println("Workout: ${workout.workoutName} has been completed")
+        } else {
+            println("not a valid index")
+        }
+    }
+
+    fun getArchivedWorkouts(): List<Workout> {
+        return workouts.filter { it.sessionCompleted }
+    }
+
     private fun findWorkout(index: Int): Workout? = if (ValidateInput.isValidListIndex(index, workouts)) { workouts[index] } else null // finds a note
 
     fun deleteWorkout(indexToDelete: Int): Workout? =
