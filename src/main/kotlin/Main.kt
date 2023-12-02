@@ -49,9 +49,7 @@ fun runMenu() { /*
         when (val option = mainMenu()) {
             1  -> addUser()
             2  -> listUsers()
-            11  -> save()
-            12  -> load()
-            0  -> exitApp()
+            3 -> updateUser()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
@@ -96,21 +94,45 @@ fun listUsers(){
 fun listAllUsers(){ println(UserAPI.listAllUsers()) }
 
 
-
-
-
-fun save() {
-    try { UserAPI.store() } catch (e: Exception) {
-        System.err.println("Error writing to file: $e")
+fun updateUser() {
+    listUsers()
+    if (UserAPI.numberOfUsers() > 0) {
+        val indexToUpdate = readNextInt("Enter the index of what user to update: ")
+        if (UserAPI.isValidIndex(indexToUpdate)) {
+            val userID = readNextInt("Enter user ID: ")
+            val userName = readNextLine("Enter your name: ")
+            val userEmail = readNextLine("Enter your email address: ")
+            val userPass = readNextLine("enter your password: ")
+            if (UserAPI.updateUser(indexToUpdate, User(userID, userName, userEmail, userPass))) {
+                println("update successful")
+            } else {
+                println("update failed")
+            }
+        } else {
+            println("No users at this index!")
+        }
     }
-}
 
-fun load() {
-    try { UserAPI.load() } catch (e: Exception) {
-        System.err.println("Error reading from file: $e")
+
+    fun save() {
+        try {
+            UserAPI.store()
+        } catch (e: Exception) {
+            System.err.println("Error writing to file: $e")
+        }
     }
+
+    fun load() {
+        try {
+            UserAPI.load()
+        } catch (e: Exception) {
+            System.err.println("Error reading from file: $e")
+        }
+    }
+
+
+    fun exitApp() {
+        logger.info { "exitApp() function invoked" }
+        exitProcess(0)
+    } // exits app when finished
 }
-
-
-fun exitApp(){ logger.info { "exitApp() function invoked" }
-    exitProcess(0) } // exits app when finished

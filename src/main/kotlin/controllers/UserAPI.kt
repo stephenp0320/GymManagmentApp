@@ -3,6 +3,7 @@ package controllers
 import models.User
 import persistence.JSONSerializer
 import persistence.Serializer
+import utils.ValidateInput
 
 class UserAPI(serializerType: JSONSerializer) {
     private var users = ArrayList<User>() // notes are stored here
@@ -14,6 +15,26 @@ class UserAPI(serializerType: JSONSerializer) {
     fun numberOfUsers(): Int { return users.size}
 
     fun listAllUsers(): String = if(users.isEmpty()) "no users stored" else writeList(users)
+
+
+    fun isValidIndex(index: Int) :Boolean{ return ValidateInput.isValidListIndex(index, users) } // validates the entered index
+
+
+
+fun updateUser(indexToUpdate: Int, user: User?): Boolean{
+    val foundUser = findUser(indexToUpdate)
+    if ((foundUser != null) && (user != null)){
+        foundUser.userID = user.userID
+        foundUser.userName = user.userName
+        foundUser.userEmail = user.userEmail
+        return true
+    }
+    return false
+}
+
+    private fun findUser(index: Int): User? = if (ValidateInput.isValidListIndex(index, users)) { users[index] } else null // finds a note
+
+
     @Throws(Exception::class)
     fun load() { users = Serializer.read() as ArrayList<User> }
 
