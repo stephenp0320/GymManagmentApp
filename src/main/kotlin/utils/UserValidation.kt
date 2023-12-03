@@ -22,7 +22,7 @@ object UserValidation {
     /*https://gist.github.com/ironic-name/f8e8479c76e80d470cacd91001e7b45b*/
     private fun isValidEmailAddress(email: String?): Boolean{
         if (email.isNullOrBlank()) return false
-        val emailRegex = ("^((?!\\.)[\\w-_.]*[^.])(@w+\\.)+[a-zA-Z]{2,6}$").toRegex()
+        val emailRegex = ("^([\\w-_.]+)@([\\w-]+\\.)+[a-zA-Z]{2,6}$").toRegex()
         return emailRegex.matches(email)
     }
 }
