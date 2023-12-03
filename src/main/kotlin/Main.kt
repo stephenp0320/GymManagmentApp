@@ -12,19 +12,18 @@ import utils.WorkoutValidation.readValidWorkoutName
 import java.io.File
 import kotlin.system.exitProcess
 
-
 private val logger = KotlinLogging.logger {}
-//private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+
+// private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
 private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
 
-
 fun main() {
     runMenu()
-
-}//code when run loads menu
-fun mainMenu() : Int { //users notes app user interface menu
-    return readNextInt(""" 
+} // code when run loads menu
+fun mainMenu(): Int { // users notes app user interface menu
+    return readNextInt(
+        """ 
           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
           █                  STEVE'S GYM MANAGEMENT APP                         █
           █                                                                     █
@@ -47,9 +46,9 @@ fun mainMenu() : Int { //users notes app user interface menu
           ███████████████████████████████████████████████████████████████████████
 
           
-         Type here ==>> """.trimMargin(">"))
-    //https://www.asciiart.eu/ascii-one-line
-
+         Type here ==>> """.trimMargin(">")
+    )
+    // https://www.asciiart.eu/ascii-one-line
 }
 
 fun runMenu() { /*
@@ -58,8 +57,8 @@ fun runMenu() { /*
  */
     do {
         when (val option = mainMenu()) {
-            1  -> addUser()
-            2  -> listUsers()
+            1 -> addUser()
+            2 -> listUsers()
             3 -> updateUser()
             4 -> deleteUser()
             5 -> addWorkout()
@@ -78,26 +77,23 @@ fun runMenu() { /*
     } while (true)
 }
 
-
 /* user functionality*/
 
-
-fun addUser(){
+fun addUser() {
     val userID = readNextInt("Enter user ID: ")
     val userName = readNextLine("Enter your name: ")
     val userEmail = readValidUserEmailAddress("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
-    val isAdded = userEmail?.let { User(userID,userName, it,userPass).let { UserAPI.add(it) } }
-    if (isAdded == true){
+    val isAdded = userEmail?.let { User(userID, userName, it, userPass).let { UserAPI.add(it) } }
+    if (isAdded == true) {
         println("User has been successfully added")
     } else {
         println("add failed")
     }
 }
 
-
-fun listUsers(){
-    if (UserAPI.numberOfUsers() > 0){
+fun listUsers() {
+    if (UserAPI.numberOfUsers() > 0) {
         val option = readNextInt(
             """
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -105,7 +101,8 @@ fun listUsers(){
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                   █   1) List ALL Users          █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) { // submenu for the user to choose the type of notes listed
             1 -> listAllUsers()
             else -> println("Invalid option entered: $option")
@@ -113,8 +110,7 @@ fun listUsers(){
     } else { println("Option Invalid - No users stored") }
 }
 
-fun listAllUsers(){ println(UserAPI.listAllUsers()) }
-
+fun listAllUsers() { println(UserAPI.listAllUsers()) }
 
 fun updateUser() {
     listUsers()
@@ -136,43 +132,46 @@ fun updateUser() {
     }
 }
 
-    fun deleteUser(){
-        listUsers()
-        if (UserAPI.numberOfUsers() > 0){
-            val indexToDelete = readValidListIndex("Enter the index of the user you want to delete: ", UserAPI.numberOfUsers())
-            val userToDelete = UserAPI.deleteUser(indexToDelete)
-            if(userToDelete != null){
-                println("Delete successful! Deleted User: ${userToDelete.userName}")
-            } else{
-                println("Delete not successful")
-            }
+fun deleteUser() {
+    listUsers()
+    if (UserAPI.numberOfUsers() > 0) {
+        val indexToDelete = readValidListIndex("Enter the index of the user you want to delete: ", UserAPI.numberOfUsers())
+        val userToDelete = UserAPI.deleteUser(indexToDelete)
+        if (userToDelete != null) {
+            println("Delete successful! Deleted User: ${userToDelete.userName}")
+        } else {
+            println("Delete not successful")
         }
     }
-
+}
 
 /* workout functionality*/
 
-
-fun addWorkout(){
+fun addWorkout() {
     val workoutID = readNextInt("Enter Workout ID: ")
     val workoutName = readValidWorkoutName("Enter workout name: ")
     val sessionType = readNextLine("Enter the type of session: ")
     val date = readNextInt("enter the date: ")
     val sessionDuration = readNextInt("Enter session duration: ")
     val isAdded = workoutName?.let {
-        Workout(workoutID,
-            it,sessionType,date,sessionDuration, sessionCompleted = false)
+        Workout(
+            workoutID,
+            it,
+            sessionType,
+            date,
+            sessionDuration,
+            sessionCompleted = false
+        )
     }?.let { WorkoutAPI.addWorkout(it) }
-    if (isAdded == true){
+    if (isAdded == true) {
         println("Workout has been successfully added")
     } else {
         println("Workout addition  failed")
     }
 }
 
-
-fun listWorkout(){
-    if (WorkoutAPI.numberOfWorkouts() > 0){
+fun listWorkout() {
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
         val option = readNextInt(
             """
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -180,7 +179,8 @@ fun listWorkout(){
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                   █   1) List ALL Workouts       █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) { // submenu for the user to choose the type of notes listed
             1 -> listAllWorkouts()
             else -> println("Invalid option entered: $option")
@@ -188,8 +188,7 @@ fun listWorkout(){
     } else { println("Option Invalid - No workouts stored") }
 }
 
-fun listAllWorkouts(){ println(WorkoutAPI.listAllWorkouts()) }
-
+fun listAllWorkouts() { println(WorkoutAPI.listAllWorkouts()) }
 
 fun updateWorkout() {
     listUsers()
@@ -201,7 +200,7 @@ fun updateWorkout() {
             val sessionType = readNextLine("Enter the type of session: ")
             val date = readNextInt("enter the date: ")
             val sessionDuration = readNextInt("Enter session duration: ")
-            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID,workoutName,sessionType,date,sessionDuration, sessionCompleted = false))) {
+            if (WorkoutAPI.updateWorkout(indexToUpdate, Workout(workoutID, workoutName, sessionType, date, sessionDuration, sessionCompleted = false))) {
                 println("update successful")
             } else {
                 println("update failed")
@@ -212,14 +211,14 @@ fun updateWorkout() {
     }
 }
 
-fun deleteWorkout(){
+fun deleteWorkout() {
     listWorkout()
-    if (WorkoutAPI.numberOfWorkouts() > 0){
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
         val indexToDelete = readValidListIndex("Enter the index of the workout you want to delete: ", UserAPI.numberOfUsers())
         val workoutToDelete = WorkoutAPI.deleteWorkout(indexToDelete)
-        if(workoutToDelete != null){
+        if (workoutToDelete != null) {
             println("Delete successful! Deleted Workout: ${workoutToDelete.workoutName}")
-        } else{
+        } else {
             println("Delete not successful")
         }
     }
@@ -227,8 +226,8 @@ fun deleteWorkout(){
 
 /* new functionality*/
 
-fun userWorkoutMenu(){
-    if (WorkoutAPI.numberOfWorkouts() > 0){
+fun userWorkoutMenu() {
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
         val option = readNextInt(
             """
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -236,7 +235,8 @@ fun userWorkoutMenu(){
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                   █   1) Choose workout         █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) { // submenu for the user to choose the type of notes listed
             1 -> WorkoutAPI.chooseWorkout()
             else -> println("Invalid option entered: $option")
@@ -244,9 +244,9 @@ fun userWorkoutMenu(){
     } else { println("Option Invalid - No workouts stored") }
 }
 
-fun workoutCompletion(){
+fun workoutCompletion() {
     println("Welcome to the workout completion logger!")
-    if (WorkoutAPI.numberOfWorkouts() > 0){
+    if (WorkoutAPI.numberOfWorkouts() > 0) {
         val option = readNextInt(
             """
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -256,39 +256,27 @@ fun workoutCompletion(){
                   █   2) view archived workouts  █ 
                   █   3) view active workouts    █ 
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-         > ==>> """.trimMargin(">"))
+         > ==>> """.trimMargin(">")
+        )
         when (option) { // submenu for the user to choose the type of notes listed
             1 -> WorkoutAPI.logWorkoutCompletion()
             2 -> viewArchivedWorkouts()
             else -> println("Invalid option entered: $option")
         }
     } else { println("Option Invalid - No workouts stored") }
-
 }
 
-
-
-
-fun viewArchivedWorkouts(){
+fun viewArchivedWorkouts() {
     val archivedWorkout = WorkoutAPI.getArchivedWorkouts()
-    if (archivedWorkout.isEmpty()){
+    if (archivedWorkout.isEmpty()) {
         println("There were no archived workouts stored")
-    } else{
+    } else {
         println("All archived workouts: ")
         archivedWorkout.forEach { workout ->
             println(workout)
         }
     }
 }
-
-
-
-
-
-
-
-
-
 
 /*running methods*/
 fun saveUsers() {
@@ -298,7 +286,7 @@ fun saveUsers() {
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-} //saves notes
+} // saves notes
 
 fun loadUser() {
     println("Users successfully loaded!")
@@ -316,7 +304,7 @@ fun saveWorkout() {
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-} //saves notes
+} // saves notes
 
 fun loadWorkout() {
     println("Workouts successfully loaded!")
@@ -327,9 +315,7 @@ fun loadWorkout() {
     }
 }
 
-
-    fun exitApp() {
-        logger.info { "exitApp() function invoked" }
-        exitProcess(0)
-    } // exits app when finished
-
+fun exitApp() {
+    logger.info { "exitApp() function invoked" }
+    exitProcess(0)
+} // exits app when finished

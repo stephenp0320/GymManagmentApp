@@ -8,7 +8,6 @@ import java.io.File
 
 class WorkoutAPITest {
 
-
     private var yoga: Workout? = null
     private var back: Workout? = null
     private var legs: Workout? = null
@@ -24,7 +23,7 @@ class WorkoutAPITest {
         legs = Workout(4, "legs", "hypertrophy", 17, 70, false)
         cycling = Workout(5, "cycling", "cardio", 20, 10, true)
         treadmill = Workout(6, "treadmill", "cardio", 12, 90, false)
-        //adding 5 Note to the notes api
+        // adding 5 Note to the notes api
         populatedWorkouts!!.addWorkout(yoga!!)
         populatedWorkouts!!.addWorkout(back!!)
         populatedWorkouts!!.addWorkout(legs!!)
@@ -43,10 +42,8 @@ class WorkoutAPITest {
         emptyWorkouts = null
     }
 
-
     @Nested
     inner class PersistenceTests {
-
 
         @Test
         fun `saving and loading an empty collection in JSON doesn't crash app`() {
@@ -54,16 +51,14 @@ class WorkoutAPITest {
             val storingNotes = WorkoutAPI(JSONSerializer(File("workout.json")))
             storingNotes.store()
 
-            //Loading the empty notes.json file into a new object
+            // Loading the empty notes.json file into a new object
             val loadedNotes = WorkoutAPI(JSONSerializer(File("workout.json")))
             loadedNotes.load()
 
-            //Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)
+            // Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)
             assertEquals(0, storingNotes.numberOfWorkouts())
             assertEquals(0, loadedNotes.numberOfWorkouts())
             assertEquals(storingNotes.numberOfWorkouts(), loadedNotes.numberOfWorkouts())
         }
-
-
     }
 }

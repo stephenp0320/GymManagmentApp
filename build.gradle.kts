@@ -3,6 +3,8 @@ plugins {
     // Plugin for Dokka - KDoc generating tool
     id("org.jetbrains.dokka") version "1.9.10"
     jacoco
+    // Plugin for Ktlint
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
     application
 }
 
@@ -14,7 +16,7 @@ repositories {
 }
 
 dependencies {
-   // testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
+    // testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.8.10")
     // dependencies for logging
     implementation("io.github.microutils:kotlin-logging:3.0.5")
@@ -22,16 +24,13 @@ dependencies {
     implementation("com.thoughtworks.xstream:xstream:1.4.20")
     implementation("org.codehaus.jettison:jettison:1.5.4")
 
-
     // For generating a Dokka Site from KDoc
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
-
-
 }
 
 tasks.test {
     useJUnitPlatform()
-    //report is always generated after tests run
+    // report is always generated after tests run
     finalizedBy(tasks.jacocoTestReport)
 }
 

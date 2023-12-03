@@ -7,9 +7,7 @@ class User(
     var userPassword: String
 ) {
 
-    override fun toString(): String{
+    override fun toString(): String {
         return "User ID: $userID, Name: $userName, Email: $userEmail"
     }
-
 }
-
