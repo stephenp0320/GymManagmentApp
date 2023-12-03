@@ -20,4 +20,6 @@ object WorkoutValidation {
     fun isValidWorkoutName(workoutNameCheck: String?): Boolean {
         return !workoutNameCheck.isNullOrBlank()
     }
+
+
 }

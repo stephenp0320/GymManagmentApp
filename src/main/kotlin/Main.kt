@@ -7,10 +7,17 @@ import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import utils.UserValidation.readValidUserEmailAddress
+import utils.Utilities.validRating
+import utils.ValidateInput.readValidIntensity
 import utils.ValidateInput.readValidListIndex
+import utils.ValidateInput.readValidWorkout
+import utils.WorkoutOptions
 import utils.WorkoutValidation.readValidWorkoutName
 import java.io.File
 import kotlin.system.exitProcess
+import utils.WorkoutOptions.isValidWorkout
+import utils.WorkoutOptions.categories
+import utils.WorkoutOptions.intensity
 
 private val logger = KotlinLogging.logger {}
 
@@ -30,16 +37,16 @@ fun mainMenu(): Int { // users notes app user interface menu
           ███████████████████████████████████████████████████████████████████████                                                           
           █  CRUD OPTIONS:                                                      █
           █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP           █
-          █    2) LIST USER         6) LIST WORKOUT       11) SAVE USERS        █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     12) LOAD USERS        █
-          █    4) DELETE USER       8) DELETE WORKOUT     13) SAVE WORKOUT      █ 
-          █                                               14) LOAD WORKOUT      █
+          █    2) LIST USER         6) LIST WORKOUT       12) SAVE USERS        █
+          █    3) UPDATE USER       7) UPDATE WORKOUT     13) LOAD USERS        █
+          █    4) DELETE USER       8) DELETE WORKOUT     14) SAVE WORKOUT      █ 
+          █                                               15) LOAD WORKOUT      █
           █                                                                     █
           ███████████████████████████████████████████████████████████████████████                                              
           █  ADDITIONAL FUNCTIONS:                                              █
           █    9) Open User Workout Menu                                        █
           █    10) Complete Workout                                             █
-          █                                                                     █
+          █    11) Select gym's workout                                         █
           █                                                                     █
           █                                                                     █
           █                                                                     █
@@ -67,10 +74,11 @@ fun runMenu() { /*
             8 -> deleteWorkout()
             9 -> userWorkoutMenu()
             10 -> workoutCompletion()
-            11 -> saveUsers()
-            12 -> loadUser()
-            13 -> saveWorkout()
-            14 -> loadWorkout()
+            11 -> selectGymWorkout()
+            12 -> saveUsers()
+            13 -> loadUser()
+            14 -> saveWorkout()
+            15 -> loadWorkout()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -277,6 +285,22 @@ fun viewArchivedWorkouts() {
         }
     }
 }
+
+fun selectGymWorkout(){
+    val selectWorkout = readValidWorkout("Select a workout from the options listed: $categories")
+    println("The workout you have selected is: $selectWorkout")
+    val setIntensity  = readValidIntensity("Select the intensity for your workout from the options listed: $intensity")
+    println("The workout intensity you have chosen is: $setIntensity")
+    val rateTheWorkout = readNextInt("Rate your workout: 1 - 10: ")
+    if (validRating(rateTheWorkout)) {
+        println("$selectWorkout Rating: $rateTheWorkout")
+    } else{
+        println("not a valid range of 1-10: ")
+    }
+
+}
+
+
 
 /*running methods*/
 fun saveUsers() {

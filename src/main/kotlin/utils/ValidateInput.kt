@@ -1,6 +1,7 @@
 package utils
 
 import utils.ScannerInput.readNextInt
+import java.util.*
 
 object ValidateInput {
 
@@ -15,6 +16,34 @@ object ValidateInput {
             }
         } while (true)
     }
+
+
+    @JvmStatic
+    fun readValidWorkout(prompt: String?): String {
+        print(prompt)
+        var input = Scanner(System.`in`).nextLine()
+        do {
+            if (WorkoutOptions.isValidWorkout(input))
+                return input
+            else { print("Invalid workout $input.  Please try again: ")
+                input = Scanner(System.`in`).nextLine()
+            }
+        } while (true)
+    }
+
+    @JvmStatic
+    fun readValidIntensity(prompt: String?): String {
+        print(prompt)
+        var input = Scanner(System.`in`).nextLine()
+        do {
+            if (WorkoutOptions.isValidIntensity(input))
+                return input
+            else { print("Invalid intensity $input.  Please try again: ")
+                input = Scanner(System.`in`).nextLine()
+            }
+        } while (true)
+    }
+
 
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
