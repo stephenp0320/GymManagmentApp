@@ -22,6 +22,6 @@ class User(
      * @return A string that contains the user's ID, name, and email.
      */
     override fun toString(): String {
-        return "User ID: $userID, Name: $userName, Email: $userEmail"
+        return "User ID: $userID, Name: $userName, Email: $userEmail, Password: $userPassword"
     }
 }

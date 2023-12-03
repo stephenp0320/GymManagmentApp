@@ -106,7 +106,8 @@ fun addUser() {
     val userID = readNextInt("Enter user ID: ")
     val userName = readNextLine("Enter your name: ")
     val userEmail = readValidUserEmailAddress("Enter your email address: ")
-    val userPass = readNextLine("enter your password: ")
+    val userPass = UserAPI.getANewSecurePassword(10)
+    println("User Password: $userPass")
     val isAdded = userEmail?.let { User(userID, userName, it, userPass).let { UserAPI.add(it) } }
     if (isAdded == true) {
         println("User has been successfully added")
