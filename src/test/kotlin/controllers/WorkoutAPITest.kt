@@ -164,6 +164,26 @@ class WorkoutAPITest {
             assertEquals("Hypertrophy", populatedWorkouts!!.findWorkout(2)!!.sessionType) // Updated session type
         }
     }
+    @Nested
+    inner class LogWorkoutCompletion {
+
+        @Test
+        fun `logWorkoutCompletion selects and marks the workout as completed`() {
+            val loggedWorkout = Workout(7, "back & biceps", "cardio", 15, 30, false)
+            populatedWorkouts!!.addWorkout(loggedWorkout)
+            val selectedWorkout = populatedWorkouts!!.numberOfWorkouts() - 1
+            assertFalse(populatedWorkouts!!.findWorkout(selectedWorkout)!!.sessionCompleted)
+            assertFalse(populatedWorkouts!!.findWorkout(selectedWorkout)!!.sessionCompleted)
+        }
+
+        @Test
+        fun `logWorkoutCompletion that has invalid index selected cant change the workout`() {
+            populatedWorkouts!!.addWorkout(Workout(8, "biceps & shoulders", "strength", 16, 45, false))
+            val workoutIndex = populatedWorkouts!!.numberOfWorkouts() - 1
+            assertFalse(populatedWorkouts!!.findWorkout(workoutIndex)!!.sessionCompleted)
+            assertFalse(populatedWorkouts!!.findWorkout(workoutIndex)!!.sessionCompleted)
+        }
+    }
 }
 
 
