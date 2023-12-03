@@ -85,10 +85,10 @@ fun runMenu() { /*
 fun addUser(){
     val userID = readNextInt("Enter user ID: ")
     val userName = readNextLine("Enter your name: ")
-    val userEmail = readNextLine("Enter your email address: ")
+    val userEmail = readValidUserEmailAddress("Enter your email address: ")
     val userPass = readNextLine("enter your password: ")
-    val isAdded = User(userID,userName, userEmail,userPass).let { UserAPI.add(it) }
-    if (isAdded){
+    val isAdded = userEmail?.let { User(userID,userName, it,userPass).let { UserAPI.add(it) } }
+    if (isAdded == true){
         println("User has been successfully added")
     } else {
         println("add failed")
