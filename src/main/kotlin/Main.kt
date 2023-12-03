@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
-private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workouts.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
 
 
 fun main() {
