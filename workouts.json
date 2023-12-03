@@ -1,1 +1,1 @@
-{"object-stream":{"list":[""]}}
+{"object-stream":{"list":[{"models.Workout":[{"workoutID":5,"workoutName":"back","sessionType":"hypertrophy","date":12,"sessionDuration":111,"sessionCompleted":false},{"workoutID":1,"workoutName":"cycling","sessionType":"cardio","date":23,"sessionDuration":20,"sessionCompleted":false}]}]}}

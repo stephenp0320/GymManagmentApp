@@ -292,6 +292,7 @@ fun viewArchivedWorkouts(){
 
 /*running methods*/
 fun saveUsers() {
+    println("Users successfully saved!")
     try {
         UserAPI.store()
     } catch (e: Exception) {
@@ -300,6 +301,7 @@ fun saveUsers() {
 } //saves notes
 
 fun loadUser() {
+    println("Users successfully loaded!")
     try {
         UserAPI.load()
     } catch (e: Exception) {
@@ -308,6 +310,7 @@ fun loadUser() {
 }
 
 fun saveWorkout() {
+    println("Workouts successfully saved!")
     try {
         WorkoutAPI.store()
     } catch (e: Exception) {
@@ -316,6 +319,7 @@ fun saveWorkout() {
 } //saves notes
 
 fun loadWorkout() {
+    println("Workouts successfully loaded!")
     try {
         WorkoutAPI.load()
     } catch (e: Exception) {
