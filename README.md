@@ -1,32 +1,43 @@
-# GymManagmentApp
-Workout Management App
-Introduction
-Welcome to the Workout Management App, a comprehensive solution designed to manage and track workout routines for individuals and gym managers. This application offers a user-friendly interface to add, update, delete, and list workouts and users, ensuring an organized and efficient workout management system.
 
-Features
-User Management: Add, update, delete, and list users.
-Workout Management: Add, update, delete, and list workouts.
-Workout Completion Logging: Log the completion of workouts and view archived workouts.
-Workout Selection: Select a workout from predefined categories and rate it based on intensity and personal experience.
-Data Persistence: Save and load user and workout data using JSON serialization.
-User-Friendly Interface: Easy-to-navigate menu system for seamless user interaction.
-Prerequisites
-To run the Workout Management App, ensure you have the following:
+# **STEVE'S GYM MANAGEMENT APP README**
 
-Kotlin compiler and runtime environment.
-JSON support for data storage and retrieval.
-Setup
-Clone the Repository: Clone the app's code repository from the designated source.
-Install Dependencies: Ensure all necessary Kotlin dependencies and libraries are installed.
-Data Files: Create user.json and workout.json in the app's root directory for data storage.
-Usage
-Follow these steps to run the app:
+## **Introduction 👋**
 
-Compile and Run: Compile the Kotlin files and run the main application.
-Main Menu: Navigate through the main menu to access different functionalities.
-Choose options for user management (add, list, update, delete).
-Choose options for workout management (add, list, update, delete, complete).
-Workout and User Operations: Select the appropriate option to perform operations on workouts and users.
-Save and Load Data: Use the save and load options frequently to ensure data persistence.
+Welcome to Steve's Gym Management App, a vibrant and dynamic Kotlin-based application designed to bring ease and efficiency to gym management. This comprehensive solution, crafted with passion and precision, is the perfect companion for gym owners and fitness enthusiasts alike, offering a seamless integration of user and workout management.
 
-<img width="442" alt="image" src="https://github.com/stephenp0320/GymManagmentApp/assets/106538184/e7ca1a43-4d7c-453b-a034-843ff4ea8afe">
+## Key Features 🫠
+
+### **User-Friendly Interface**
+
+The app boasts an aesthetically pleasing and interactive ASCII art-based main menu, making navigation both engaging and intuitive.
+
+### **User Management**
+
+Add Users: Effortlessly onboard new gym members with just a few clicks.
+List Users: View a neatly organized list of all members, ensuring easy tracking and management.
+Update Users: Modify user details swiftly, adapting to changes in user information.
+Delete Users: Remove users from the system with ease, maintaining an up-to-date member list.
+
+### Workout Management
+
+Add Workouts: Tailor workout plans to meet individual needs, enhancing the training experience.
+List Workouts: Access a detailed overview of all available workout sessions.
+Update Workouts: Adjust workout details to keep up with evolving fitness regimes.
+Delete Workouts: Remove outdated or unused workout plans, keeping the system efficient and relevant.
+
+### Enhanced Functionality
+
+Workout Completion Logging: You are able to track a users progress by logging completed workouts.
+Archived Workouts: You can view the history of completed sessions, providing valuable insights into member activity.
+User Workout Menu: A specialized menu for individual user workout preferences and tracking.
+Rate Workouts: Members can rate their workouts.
+
+### Security
+
+Users are provided with a very secure password when added to the app
+
+### Getting Started ❤️
+
+Running the app is easy! Simply execute the main function, and you'll be greeted with the vibrant main menu. Navigate through the options to manage users and workouts, and watch as the app transforms your gym management experience.
+
+![img_1.png](img_1.png)
