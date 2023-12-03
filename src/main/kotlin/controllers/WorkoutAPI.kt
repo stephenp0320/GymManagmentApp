@@ -82,10 +82,14 @@ class WorkoutAPI(serializerType: JSONSerializer) {
 
 
     @Throws(Exception::class)
-    fun load() { workouts = serializer.read() as ArrayList<Workout> }
+    fun load() {
+        workouts = serializer.read() as ArrayList<Workout>
+    }
 
     @Throws(Exception::class)
-    fun store() { serializer.write(workouts) }
+    fun store() {
+        serializer.write(workouts)
+    }
 
 
 

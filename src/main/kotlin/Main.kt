@@ -291,13 +291,37 @@ fun viewArchivedWorkouts(){
 
 
 /*running methods*/
-fun saveUsers() { try { UserAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+fun saveUsers() {
+    try {
+        UserAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+} //saves notes
 
-fun loadUser() { try { UserAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
+fun loadUser() {
+    try {
+        UserAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
 
-fun saveWorkout() { try { WorkoutAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+fun saveWorkout() {
+    try {
+        WorkoutAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+} //saves notes
 
-fun loadWorkout() { try { WorkoutAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
+fun loadWorkout() {
+    try {
+        WorkoutAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
 
 
     fun exitApp() {
