@@ -21,18 +21,27 @@ import utils.WorkoutOptions.intensity
 
 private val logger = KotlinLogging.logger {}
 
-// private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
 private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
 
+/**
+ * Entry point for the Gym Management Application.
+ */
 fun main() {
     runMenu()
-} // code when run loads menu
-fun mainMenu(): Int { // users notes app user interface menu
+}
+
+/**
+ * Displays the main menu and reads the user's choice.
+ *
+ * @return The chosen menu option as an Int.
+ */
+fun mainMenu(): Int {
     return readNextInt(
         """ 
           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                  STEVE'S GYM MANAGEMENT APP                         █
+          █                     STEVE'S GYM MANAGEMENT APP                      █
           █                                                                     █
           ███████████████████████████████████████████████████████████████████████                                                           
           █  CRUD OPTIONS:                                                      █
@@ -58,6 +67,10 @@ fun mainMenu(): Int { // users notes app user interface menu
     // https://www.asciiart.eu/ascii-one-line
 }
 
+
+/**
+ * Drives the main loop, executing functions based on user's choice.
+ */
 fun runMenu() { /*
  Method that allows the user to select options displayed in the ui, uses a switch statement to
  Which contains all the functions for the user
@@ -85,7 +98,9 @@ fun runMenu() { /*
     } while (true)
 }
 
-/* user functionality*/
+/**
+ * Handles the addition of a new user.
+ */
 
 fun addUser() {
     val userID = readNextInt("Enter user ID: ")
@@ -100,6 +115,9 @@ fun addUser() {
     }
 }
 
+/**
+ * Lists all the users.
+ */
 fun listUsers() {
     if (UserAPI.numberOfUsers() > 0) {
         val option = readNextInt(
@@ -118,8 +136,15 @@ fun listUsers() {
     } else { println("Option Invalid - No users stored") }
 }
 
+
+/**
+ * Displays all users.
+ */
 fun listAllUsers() { println(UserAPI.listAllUsers()) }
 
+/**
+ * Updates a specific user's information.
+ */
 fun updateUser() {
     listUsers()
     if (UserAPI.numberOfUsers() > 0) {
@@ -139,6 +164,9 @@ fun updateUser() {
         }
     }
 }
+/**
+ * Deletes a specific user.
+ */
 
 fun deleteUser() {
     listUsers()
@@ -153,7 +181,9 @@ fun deleteUser() {
     }
 }
 
-/* workout functionality*/
+/**
+ * Handles the addition of a new workout.
+ */
 
 fun addWorkout() {
     val workoutID = readNextInt("Enter Workout ID: ")
@@ -178,6 +208,9 @@ fun addWorkout() {
     }
 }
 
+/**
+ * Lists all workouts.
+ */
 fun listWorkout() {
     if (WorkoutAPI.numberOfWorkouts() > 0) {
         val option = readNextInt(
@@ -196,8 +229,14 @@ fun listWorkout() {
     } else { println("Option Invalid - No workouts stored") }
 }
 
+/**
+ * Displays all workouts.
+ */
 fun listAllWorkouts() { println(WorkoutAPI.listAllWorkouts()) }
 
+/**
+ * Updates a specific workout's information.
+ */
 fun updateWorkout() {
     listUsers()
     if (WorkoutAPI.numberOfWorkouts() > 0) {
@@ -219,6 +258,9 @@ fun updateWorkout() {
     }
 }
 
+/**
+ * Deletes a specific workout.
+ */
 fun deleteWorkout() {
     listWorkout()
     if (WorkoutAPI.numberOfWorkouts() > 0) {
@@ -231,8 +273,9 @@ fun deleteWorkout() {
         }
     }
 }
-
-/* new functionality*/
+/**
+ * Opens a specific menu for user workout management.
+ */
 
 fun userWorkoutMenu() {
     if (WorkoutAPI.numberOfWorkouts() > 0) {
@@ -251,7 +294,9 @@ fun userWorkoutMenu() {
         }
     } else { println("Option Invalid - No workouts stored") }
 }
-
+/**
+ * Handles the logging and completion of workouts.
+ */
 fun workoutCompletion() {
     println("Welcome to the workout completion logger!")
     if (WorkoutAPI.numberOfWorkouts() > 0) {
@@ -273,7 +318,9 @@ fun workoutCompletion() {
         }
     } else { println("Option Invalid - No workouts stored") }
 }
-
+/**
+ * Displays archived workouts.
+ */
 fun viewArchivedWorkouts() {
     val archivedWorkout = WorkoutAPI.getArchivedWorkouts()
     if (archivedWorkout.isEmpty()) {
@@ -286,6 +333,9 @@ fun viewArchivedWorkouts() {
     }
 }
 
+/**
+ * Allows the user to select and rate a gym workout.
+ */
 fun selectGymWorkout(){
     val selectWorkout = readValidWorkout("Select a workout from the options listed: $categories")
     println("The workout you have selected is: $selectWorkout")
@@ -300,7 +350,9 @@ fun selectGymWorkout(){
 
 }
 
-
+/**
+ * Saves user data to persistent storage.
+ */
 
 /*running methods*/
 fun saveUsers() {
@@ -310,25 +362,19 @@ fun saveUsers() {
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-} // saves notes
+}
 
 fun loadUser() {
     println("Users successfully loaded!")
-    try {
-        UserAPI.load()
-    } catch (e: Exception) {
-        System.err.println("Error reading from file: $e")
-    }
+    try { UserAPI.load() } catch (e: Exception) {
+        System.err.println("Error reading from file: $e") }
 }
 
 fun saveWorkout() {
     println("Workouts successfully saved!")
-    try {
-        WorkoutAPI.store()
-    } catch (e: Exception) {
-        System.err.println("Error writing to file: $e")
-    }
-} // saves notes
+    try { WorkoutAPI.store() } catch (e: Exception) {
+        System.err.println("Error writing to file: $e") }
+}
 
 fun loadWorkout() {
     println("Workouts successfully loaded!")
