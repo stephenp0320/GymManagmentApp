@@ -1,6 +1,6 @@
 package utils
 
-import java.util.*
+import java.util.Scanner
 
 object WorkoutValidation {
 
@@ -8,17 +8,16 @@ object WorkoutValidation {
         print(prompt)
         var input = Scanner(System.`in`).nextLine()
         do {
-            if (isValidWorkoutName(input))
+            if (isValidWorkoutName(input)) {
                 return input
-            else { print("Invalid Workout name: $input.  Please try again: ")
+            } else {
+                print("Invalid Workout name: $input.  Please try again: ")
                 input = Scanner(System.`in`).nextLine()
             }
         } while (true)
     }
 
-
-
-     fun isValidWorkoutName(workoutNameCheck: String?):Boolean{
+    fun isValidWorkoutName(workoutNameCheck: String?): Boolean {
         return !workoutNameCheck.isNullOrBlank()
     }
 }
