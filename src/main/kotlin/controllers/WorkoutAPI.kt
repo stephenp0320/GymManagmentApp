@@ -1,9 +1,7 @@
 package controllers
 
-import models.User
 import models.Workout
 import persistence.JSONSerializer
-import persistence.Serializer
 import utils.ValidateInput
 import utils.ValidateInput.readValidListIndex
 import utils.WorkoutValidation.isValidWorkoutName
@@ -73,7 +71,7 @@ class WorkoutAPI(serializerType: JSONSerializer) {
         return workouts.filter { it.sessionCompleted }
     }
 
-    private fun findWorkout(index: Int): Workout? = if (ValidateInput.isValidListIndex(index, workouts)) { workouts[index] } else null // finds a note
+    fun findWorkout(index: Int): Workout? = if (ValidateInput.isValidListIndex(index, workouts)) { workouts[index] } else null // finds a note
 
     fun deleteWorkout(indexToDelete: Int): Workout? =
         if (ValidateInput.isValidListIndex(indexToDelete, workouts)) { workouts.removeAt(indexToDelete) } else null // deletes notes stored in the notes arrayList
@@ -82,10 +80,14 @@ class WorkoutAPI(serializerType: JSONSerializer) {
 
 
     @Throws(Exception::class)
-    fun load() { workouts = serializer.read() as ArrayList<Workout> }
+    fun load() {
+        workouts = serializer.read() as ArrayList<Workout>
+    }
 
     @Throws(Exception::class)
-    fun store() { serializer.write(workouts) }
+    fun store() {
+        serializer.write(workouts)
+    }
 
 
 

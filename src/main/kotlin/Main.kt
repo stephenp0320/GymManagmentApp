@@ -16,7 +16,7 @@ import kotlin.system.exitProcess
 private val logger = KotlinLogging.logger {}
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val UserAPI = UserAPI(JSONSerializer(File("user.json")))
-private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workouts.json")))
+private val WorkoutAPI = WorkoutAPI(JSONSerializer(File("workout.json")))
 
 
 fun main() {
@@ -291,13 +291,41 @@ fun viewArchivedWorkouts(){
 
 
 /*running methods*/
-fun saveUsers() { try { UserAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+fun saveUsers() {
+    println("Users successfully saved!")
+    try {
+        UserAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+} //saves notes
 
-fun loadUser() { try { UserAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
+fun loadUser() {
+    println("Users successfully loaded!")
+    try {
+        UserAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
 
-fun saveWorkout() { try { WorkoutAPI.store() } catch (e: Exception) { System.err.println("Error writing to file: $e") } } //saves notes
+fun saveWorkout() {
+    println("Workouts successfully saved!")
+    try {
+        WorkoutAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+} //saves notes
 
-fun loadWorkout() { try { WorkoutAPI.load() } catch (e: Exception) { System.err.println("Error reading from file: $e") } }
+fun loadWorkout() {
+    println("Workouts successfully loaded!")
+    try {
+        WorkoutAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
+}
 
 
     fun exitApp() {
