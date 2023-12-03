@@ -3,6 +3,8 @@ package controllers
 import models.User
 import persistence.JSONSerializer
 import utils.ValidateInput
+import java.security.SecureRandom
+
 /**
  * A controller class for managing users.
  *
@@ -86,6 +88,27 @@ class UserAPI(serializerType: JSONSerializer) {
      */
     fun deleteUser(indexToDelete: Int): User? = users.takeIf {
         ValidateInput.isValidListIndex(indexToDelete, it) }?.removeAt(indexToDelete)
+
+
+    /**
+     * https://www.techiedelight.com/generate-pseudo-random-password-kotlin/
+     */
+    fun getANewSecurePassword(length: Int = 10): String {
+        val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+"
+        val randomise = SecureRandom()
+        return (1..length)
+            .map { characters[randomise.nextInt(characters.length)] }
+            .joinToString("")
+    }
+
+
+
+
+
+
+
+
+
 
     /**
      * Loads the user data from the persistence layer.

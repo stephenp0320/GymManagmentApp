@@ -1,6 +1,7 @@
 package controllers
 
 import models.User
+import controllers.UserAPI
 import models.Workout
 import org.junit.jupiter.api.*
 import persistence.JSONSerializer
@@ -40,6 +41,17 @@ class UserAPITest {
         userEve = null
         userMike = null
     }
+
+
+    private var userAPI: UserAPI = UserAPI(JSONSerializer(File("user.json")))
+
+    @Test
+    fun `getANewSecurePassword generates a password that has the correct length`() {
+        val passLength = 10
+        val password = userAPI.getANewSecurePassword(passLength)
+        Assertions.assertEquals(passLength, password.length, "The generated password should have this length: $passLength")
+    }
+
         @Nested
         inner class AddUser {
             @org.junit.jupiter.api.Test
@@ -157,5 +169,7 @@ class UserAPITest {
                 Assertions.assertEquals(storingNotes.numberOfUsers(), loadedNotes.numberOfUsers())
             }
         }
-    }}
+    }
+}
+
 
