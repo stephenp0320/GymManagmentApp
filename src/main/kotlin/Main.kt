@@ -34,7 +34,7 @@ fun main() {
 
 /**
  * Displays the main menu and reads the user's choice.
- *
+ * https://www.asciiart.eu/computers/computers
  * @return The chosen menu option as an Int.
  */
 fun mainMenu(): Int {
