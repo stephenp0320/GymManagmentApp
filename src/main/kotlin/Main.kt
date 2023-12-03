@@ -40,27 +40,37 @@ fun main() {
 fun mainMenu(): Int {
     return readNextInt(
         """ 
-          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                     STEVE'S GYM MANAGEMENT APP                      █
-          █                                                                     █
-          ███████████████████████████████████████████████████████████████████████                                                           
-          █  CRUD OPTIONS:                                                      █
-          █    1) ADD USER          5) ADD WORKOUT        0) EXIT APP           █
-          █    2) LIST USER         6) LIST WORKOUT       12) SAVE USERS        █
-          █    3) UPDATE USER       7) UPDATE WORKOUT     13) LOAD USERS        █
-          █    4) DELETE USER       8) DELETE WORKOUT     14) SAVE WORKOUT      █ 
-          █                                               15) LOAD WORKOUT      █
-          █                                                                     █
-          ███████████████████████████████████████████████████████████████████████                                              
-          █  ADDITIONAL FUNCTIONS:                                              █
-          █    9) Open User Workout Menu                                        █
-          █    10) Complete Workout                                             █
-          █    11) Select gym's workout                                         █
-          █                                                                     █
-          █                                                                     █
-          █                                                                     █
-          ███████████████████████████████████████████████████████████████████████
+         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+         ██                     STEVE'S GYM MANAGEMENT APP                      ██
+         ██                                                                     ██
+         █████████████████████████████████████████████████████████████████████████                                                           
+         ██  CRUD OPTIONS:                                                      ██
+         ██    1) ADD USER          5) ADD WORKOUT        0) EXIT APP           ██
+         ██    2) LIST USER         6) LIST WORKOUT       13) SAVE USERS        ██
+         ██    3) UPDATE USER       7) UPDATE WORKOUT     14) LOAD USERS        ██
+         ██    4) DELETE USER       8) DELETE WORKOUT     15) SAVE WORKOUT      ██
+         ██                                               16) LOAD WORKOUT      ██
+         ██                                                                     ██
+         █████████████████████████████████████████████████████████████████████████                                             
+         ██  ADDITIONAL FUNCTIONS:                                              ██
+         ██    9) Open User Workout Menu                        ____            ██
+         ██    10) Complete Workout                            ||""||           ██
+         ██    11) Select gym's workout                        ||__||           ██
+         ██    12) View User Password                     jgs  [ -=.]`)         ██
+         ██                                                    ====== 0         ██
+         ██                                                                     ██
+         █████████████████████████████████████████████████████████████████████████
 
+          
+                ____
+     ||""||
+     ||__||
+jgs  [ -=.]`)
+     ====== 0
+
+          
+          
+          
           
          Type here ==>> """.trimMargin(">")
     )
@@ -88,10 +98,11 @@ fun runMenu() { /*
             9 -> userWorkoutMenu()
             10 -> workoutCompletion()
             11 -> selectGymWorkout()
-            12 -> saveUsers()
-            13 -> loadUser()
-            14 -> saveWorkout()
-            15 -> loadWorkout()
+            12 -> viewUserPassword()
+            13 -> saveUsers()
+            14 -> loadUser()
+            15 -> saveWorkout()
+            16 -> loadWorkout()
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
@@ -307,8 +318,7 @@ fun workoutCompletion() {
                   █>>> WORKOUT COMPLETION LOGGER █
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
                   █   1) log workout completion  █
-                  █   2) view archived workouts  █ 
-                  █   3) view active workouts    █ 
+                  █   2) view archived workouts  █  
                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
          > ==>> """.trimMargin(">")
         )
@@ -334,6 +344,21 @@ fun viewArchivedWorkouts() {
     }
 }
 
+fun viewUserPassword() {
+    println(listAllUsers())
+    if (UserAPI.numberOfUsers() > 0) {
+        val indexToView = readNextInt("Enter the index of what user to view password: ")
+        val selectedUser = UserAPI.findUser(indexToView)
+        if (selectedUser != null) {
+            println("password for: ${selectedUser.userName} is: ${selectedUser.userPassword}")
+        } else{
+            println("index not found")
+        }
+    } else{
+        println("invalid index")
+    }
+}
+
 /**
  * Allows the user to select and rate a gym workout.
  */
@@ -350,6 +375,9 @@ fun selectGymWorkout(){
     }
 
 }
+
+
+
 
 /**
  * Saves user data to persistent storage.
