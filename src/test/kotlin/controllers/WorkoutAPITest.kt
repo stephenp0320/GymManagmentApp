@@ -51,11 +51,11 @@ class WorkoutAPITest {
         @Test
         fun `saving and loading an empty collection in JSON doesn't crash app`() {
             // Saving an empty notes.json file.
-            val storingNotes = WorkoutAPI(JSONSerializer(File("workouts.json")))
+            val storingNotes = WorkoutAPI(JSONSerializer(File("workout.json")))
             storingNotes.store()
 
             //Loading the empty notes.json file into a new object
-            val loadedNotes = WorkoutAPI(JSONSerializer(File("workouts.json")))
+            val loadedNotes = WorkoutAPI(JSONSerializer(File("workout.json")))
             loadedNotes.load()
 
             //Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)

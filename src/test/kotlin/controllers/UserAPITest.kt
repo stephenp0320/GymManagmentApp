@@ -14,11 +14,11 @@ class UserAPITest {
         @Test
         fun `saving and loading an empty collection in JSON doesn't crash app`() {
             // Saving an empty notes.json file.
-            val storingNotes = UserAPI(JSONSerializer(File("users.json")))
+            val storingNotes = UserAPI(JSONSerializer(File("user.json")))
             storingNotes.store()
 
             //Loading the empty notes.json file into a new object
-            val loadedNotes = UserAPI(JSONSerializer(File("users.json")))
+            val loadedNotes = UserAPI(JSONSerializer(File("user.json")))
             loadedNotes.load()
 
             //Comparing the source of the notes (storingNotes) with the json loaded notes (loadedNotes)
