@@ -13,4 +13,6 @@ class Workout(
     override fun toString(): String{
         return "Workout ID: ${workoutID}, Workout Name: $workoutName, Date: $date, session type $sessionType, session duration $sessionDuration, session completed $sessionCompleted "
     }
+
+
 }
