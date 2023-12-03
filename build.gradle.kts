@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.0"
     // Plugin for Dokka - KDoc generating tool
     id("org.jetbrains.dokka") version "1.9.10"
+    jacoco
     application
 }
 
@@ -30,6 +31,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    //report is always generated after tests run
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 kotlin {
