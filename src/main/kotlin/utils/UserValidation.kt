@@ -1,6 +1,6 @@
 package utils
 
-import java.util.*
+import java.util.Scanner
 
 object UserValidation {
 
