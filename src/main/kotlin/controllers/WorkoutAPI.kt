@@ -10,6 +10,7 @@ class WorkoutAPI(serializerType: JSONSerializer) {
     private var workouts = ArrayList<Workout>() // notes are stored here
     private var serializer: JSONSerializer = serializerType
 
+
     fun addWorkout(workout: Workout): Boolean {
         if (!isValidWorkoutName(workout.workoutName)) {
             println("Invalid workout name: ${workout.workoutName}")
