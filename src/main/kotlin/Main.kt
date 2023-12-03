@@ -32,7 +32,7 @@ fun mainMenu(): Int { // users notes app user interface menu
     return readNextInt(
         """ 
           ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-          █                  STEVE'S GYM MANAGEMENT APP                         █
+          █                     STEVE'S GYM MANAGEMENT APP                      █
           █                                                                     █
           ███████████████████████████████████████████████████████████████████████                                                           
           █  CRUD OPTIONS:                                                      █
@@ -310,25 +310,19 @@ fun saveUsers() {
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
-} // saves notes
+}
 
 fun loadUser() {
     println("Users successfully loaded!")
-    try {
-        UserAPI.load()
-    } catch (e: Exception) {
-        System.err.println("Error reading from file: $e")
-    }
+    try { UserAPI.load() } catch (e: Exception) {
+        System.err.println("Error reading from file: $e") }
 }
 
 fun saveWorkout() {
     println("Workouts successfully saved!")
-    try {
-        WorkoutAPI.store()
-    } catch (e: Exception) {
-        System.err.println("Error writing to file: $e")
-    }
-} // saves notes
+    try { WorkoutAPI.store() } catch (e: Exception) {
+        System.err.println("Error writing to file: $e") }
+}
 
 fun loadWorkout() {
     println("Workouts successfully loaded!")

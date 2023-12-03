@@ -51,26 +51,29 @@ class WorkoutAPI(serializerType: JSONSerializer) {
         return false
     }
 
+    /*https://www.baeldung.com/kotlin/lambda-expressions*/
     fun logWorkoutCompletion() {
         println(listAllWorkouts())
-        val workoutIndex = readValidListIndex("Enter the index of the workout you want to complete: ", numberOfWorkouts())
-        if (isValidIndex(workoutIndex)) {
-            val workout = workouts[workoutIndex]
-            workout.sessionCompleted = true
-            println("Workout: ${workout.workoutName} has been completed")
-        } else {
-            println("not a valid index")
-        }
+        readValidListIndex("Enter the index of the workout you want to complete: ", numberOfWorkouts())
+            .takeIf { isValidIndex(it) }
+            ?.let { workoutIndex ->
+                workouts[workoutIndex].apply {
+                    sessionCompleted = true
+                    println("Workout: $workoutName has been completed")
+                }
+            } ?: println("not a valid index")
     }
+
 
     fun getArchivedWorkouts(): List<Workout> {
         return workouts.filter { it.sessionCompleted }
     }
 
-    fun findWorkout(index: Int): Workout? = if (ValidateInput.isValidListIndex(index, workouts)) { workouts[index] } else null // finds a note
+    fun findWorkout(index: Int): Workout? = if (ValidateInput.isValidListIndex(index, workouts)) { workouts[index] } else null
 
+    /*https://www.baeldung.com/kotlin/lambda-expressions*/
     fun deleteWorkout(indexToDelete: Int): Workout? =
-        if (ValidateInput.isValidListIndex(indexToDelete, workouts)) { workouts.removeAt(indexToDelete) } else null // deletes notes stored in the notes arrayList
+        workouts.takeIf {ValidateInput.isValidListIndex(indexToDelete, it) }?.removeAt(indexToDelete)
 
     @Throws(Exception::class)
     fun load() {
